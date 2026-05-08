@@ -428,12 +428,12 @@ let pendingMode = null;
 
 // ===== KANALLAR =====
 const DEFAULT_CHANNELS = [
-  {id:'tel', icon:'📞', name:'Telefon',      msgs:120, aht:180, acw:30, esAnli:1, sl:80, tgt:20, shrink:25, active:true,  deletable:false},
-  {id:'wa',  icon:'💬', name:'WhatsApp',     msgs:80,  aht:240, acw:30, esAnli:3, sl:80, tgt:30, shrink:25, active:true,  deletable:false},
-  {id:'em',  icon:'📧', name:'E-mail',       msgs:40,  aht:480, acw:60, esAnli:5, sl:90, tgt:14400, shrink:25, active:true,  deletable:false},
-  {id:'ch',  icon:'💻', name:'Live Chat',    msgs:60,  aht:300, acw:30, esAnli:4, sl:80, tgt:30, shrink:25, active:true,  deletable:false},
-  {id:'sm',  icon:'📱', name:'Sosyal Medya', msgs:30,  aht:180, acw:30, esAnli:4, sl:80, tgt:3600, shrink:25, active:false, deletable:false},
-  {id:'sms', icon:'✉️', name:'SMS',          msgs:20,  aht:60,  acw:15, esAnli:6, sl:80, tgt:60,  shrink:25, active:false, deletable:false},
+  {id:'tel', icon:'📞', name:'Telefon',      msgs:120, aht:180, acw:30, esAnli:1, sl:80, tgt:20,    shrink:25, active:true,  deletable:false},
+  {id:'wa',  icon:'💬', name:'WhatsApp',     msgs:80,  aht:240, acw:30, esAnli:3, sl:80, tgt:30,    shrink:25, active:false, deletable:false},
+  {id:'em',  icon:'📧', name:'E-mail',       msgs:40,  aht:480, acw:60, esAnli:5, sl:90, tgt:14400, shrink:25, active:false, deletable:false},
+  {id:'ch',  icon:'💻', name:'Live Chat',    msgs:60,  aht:300, acw:30, esAnli:4, sl:80, tgt:30,    shrink:25, active:false, deletable:false},
+  {id:'sm',  icon:'📱', name:'Sosyal Medya', msgs:30,  aht:180, acw:30, esAnli:4, sl:80, tgt:3600,  shrink:25, active:false, deletable:false},
+  {id:'sms', icon:'✉️', name:'SMS',          msgs:20,  aht:60,  acw:15, esAnli:6, sl:80, tgt:60,    shrink:25, active:false, deletable:false},
 ];
 let channels = JSON.parse(JSON.stringify(DEFAULT_CHANNELS));
 let customCount = 0;
@@ -445,7 +445,7 @@ function renderChannels() {
   channels.forEach((ch, idx) => {
     const row = document.createElement('div');
     row.className = 'ch-row';
-    row.style.opacity = ch.active ? '1' : '0.55';
+    row.style.opacity = ch.active ? '1' : '0.65';
     const esAnliLbl = curLang==='tr' ? 'Eş Anlı Kapasite' : 'Concurrent';
     const esAnliTipTr = "Bir agent'ın aynı anda kaç konuşma yürütebileceğini gösterir. Örnek: Telefon=1 (aynı anda tek çağrı), WhatsApp=3 (aynı anda 3 sohbet), E-mail=5 (aynı anda 5 e-posta). Bu sayı arttıkça daha az agent gerekir.";
     const esAnliTipEn = "How many simultaneous conversations one agent can handle. Example: Phone=1 (one call at a time), WhatsApp=3 (3 chats at once), Email=5 (5 emails at once). Higher number = fewer agents needed.";
@@ -513,7 +513,13 @@ function delChannel(idx) {
 function addChannel() {
   customCount++;
   const L = LANG[curLang];
-  channels.push({id:'c'+customCount, icon:'⚙️', name:(curLang==='tr'?'Özel Kanal ':'Custom Channel ')+customCount, msgs:30, aht:180, acw:30, esAnli:2, sl:80, tgt:20, shrink:25, active:true, deletable:true});
+  // Read global values for defaults
+  const defShrink = parseInt(document.getElementById('o-shrink').value)||25;
+  const defSl = parseInt(document.getElementById('o-sl').value)||80;
+  const defTgt = parseInt(document.getElementById('o-tgt').value)||20;
+  const defAht = parseInt(document.getElementById('apply-aht').value)||180;
+  const defAcw = parseInt(document.getElementById('apply-acw').value)||30;
+  channels.push({id:'c'+customCount, icon:'⚙️', name:(curLang==='tr'?'Özel Kanal ':'Custom Channel ')+customCount, msgs:30, aht:defAht, acw:defAcw, esAnli:1, sl:defSl, tgt:defTgt, shrink:defShrink, active:false, deletable:true});
   renderChannels();
   // Focus the new name input
   setTimeout(()=>{
