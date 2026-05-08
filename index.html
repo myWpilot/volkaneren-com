@@ -112,7 +112,9 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .ch-row{border:1.5px solid var(--bd);border-radius:9px;margin-bottom:10px;background:white;transition:border-color .2s;overflow:hidden;}
 .ch-row:hover{border-color:var(--pr4);}
 .ch-top{display:grid;grid-template-columns:28px 1fr 64px 64px 64px;gap:8px;align-items:center;padding:10px 12px;}
-.ch-bot{display:flex;align-items:center;gap:16px;padding:8px 12px;border-top:1px solid var(--bd);background:var(--bg);}
+.ch-bot{padding:8px 12px;border-top:1px solid var(--bd);background:var(--bg);}
+.ch-bot-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.ch-unit{font-size:10px;color:var(--tl);}
 .ch-bot-lbl{font-size:11px;color:var(--tm);display:flex;align-items:center;gap:6px;}
 .ch-bot-lbl strong{font-weight:700;color:var(--tx);}
 .ch-bot-lbl input{width:50px;padding:4px 6px;border:1.5px solid var(--bd);border-radius:6px;font-family:inherit;font-size:12px;text-align:center;outline:none;background:white;}
@@ -283,7 +285,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
   <!-- ===== OMNİCHANNEL MOD ===== -->
   <div id="panel-omni" style="display:none;">
-    <div class="layout-3col">
+    <div class="layout">
       <div>
         <div class="card">
           <div class="ctitle" id="lbl-global-title">Global Ayarlar</div>
@@ -350,9 +352,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           </div>
         </div>
 
-      </div>
-      <div>
-        <div class="card">
+        <div class="card" style="margin-top:16px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
             <div class="ctitle" style="margin:0;" id="lbl-channels-title">Kanallar</div>
             <button class="info-ico" onclick="toggleAsyncInfo()">ℹ</button>
@@ -428,12 +428,12 @@ let pendingMode = null;
 
 // ===== KANALLAR =====
 const DEFAULT_CHANNELS = [
-  {id:'tel', icon:'📞', name:'Telefon',     msgs:120, aht:180, acw:30, esAnli:1,  active:true,  deletable:false},
-  {id:'wa',  icon:'💬', name:'WhatsApp',    msgs:80,  aht:240, acw:30, esAnli:3,  active:true,  deletable:false},
-  {id:'em',  icon:'📧', name:'E-mail',      msgs:40,  aht:480, acw:60, esAnli:5,  active:true,  deletable:false},
-  {id:'ch',  icon:'💻', name:'Live Chat',   msgs:60,  aht:300, acw:30, esAnli:4,  active:true,  deletable:false},
-  {id:'sm',  icon:'📱', name:'Sosyal Medya',msgs:30,  aht:180, acw:30, esAnli:4,  active:false, deletable:false},
-  {id:'sms', icon:'✉️', name:'SMS',         msgs:20,  aht:60,  acw:15, esAnli:6,  active:false, deletable:false},
+  {id:'tel', icon:'📞', name:'Telefon',      msgs:120, aht:180, acw:30, esAnli:1, sl:80, tgt:20, shrink:25, active:true,  deletable:false},
+  {id:'wa',  icon:'💬', name:'WhatsApp',     msgs:80,  aht:240, acw:30, esAnli:3, sl:80, tgt:30, shrink:25, active:true,  deletable:false},
+  {id:'em',  icon:'📧', name:'E-mail',       msgs:40,  aht:480, acw:60, esAnli:5, sl:90, tgt:14400, shrink:25, active:true,  deletable:false},
+  {id:'ch',  icon:'💻', name:'Live Chat',    msgs:60,  aht:300, acw:30, esAnli:4, sl:80, tgt:30, shrink:25, active:true,  deletable:false},
+  {id:'sm',  icon:'📱', name:'Sosyal Medya', msgs:30,  aht:180, acw:30, esAnli:4, sl:80, tgt:3600, shrink:25, active:false, deletable:false},
+  {id:'sms', icon:'✉️', name:'SMS',          msgs:20,  aht:60,  acw:15, esAnli:6, sl:80, tgt:60,  shrink:25, active:false, deletable:false},
 ];
 let channels = JSON.parse(JSON.stringify(DEFAULT_CHANNELS));
 let customCount = 0;
@@ -450,6 +450,10 @@ function renderChannels() {
     const esAnliTipTr = "Bir agent'ın aynı anda kaç konuşma yürütebileceğini gösterir. Örnek: Telefon=1 (aynı anda tek çağrı), WhatsApp=3 (aynı anda 3 sohbet), E-mail=5 (aynı anda 5 e-posta). Bu sayı arttıkça daha az agent gerekir.";
     const esAnliTipEn = "How many simultaneous conversations one agent can handle. Example: Phone=1 (one call at a time), WhatsApp=3 (3 chats at once), Email=5 (5 emails at once). Higher number = fewer agents needed.";
     const activeLbl = curLang==='tr' ? 'Aktif' : 'Active';
+    const shrinkLbl = curLang==='tr' ? 'Shrinkage' : 'Shrinkage';
+    const slLbl = curLang==='tr' ? 'Hizmet Sev.' : 'Serv. Level';
+    const tgtLbl = curLang==='tr' ? 'Cevap Süresi' : 'Answer Time';
+    const secLbl = curLang==='tr' ? 'sn' : 'sec';
     row.innerHTML = `
       <div class="ch-top">
         <div class="ch-icon">${ch.icon}</div>
@@ -463,16 +467,33 @@ function renderChannels() {
         <div class="ch-col"><input type="number" class="ch-input" value="${ch.acw}" min="0" oninput="channels[${idx}].acw=+this.value"><div class="ch-lbl">${L.ch.acw}</div></div>
       </div>
       <div class="ch-bot">
-        <div class="ch-bot-lbl">
-          <span>${esAnliLbl}:</span>
-          <input type="number" value="${ch.esAnli}" min="1" max="20" oninput="channels[${idx}].esAnli=+this.value">
-          <button class="info-ico" style="width:16px;height:16px;font-size:10px;" onclick="showEsAnliInfo(this, \`${esAnliTipTr}\`, \`${esAnliTipEn}\`)">ℹ</button>
-        </div>
-        <div style="flex:1"></div>
-        <div class="ch-bot-lbl" style="gap:8px;">
-          <span style="color:var(--tm)">${activeLbl}</span>
-          <button class="ch-toggle ${ch.active?'on':''}" onclick="toggleCh(${idx})"></button>
-          ${ch.deletable ? '<button class="btn-del" onclick="delChannel(' + idx + ')">✕</button>' : ''}
+        <div class="ch-bot-row">
+          <div class="ch-bot-lbl">
+            <span>${esAnliLbl}:</span>
+            <input type="number" value="${ch.esAnli}" min="1" max="20" oninput="channels[${idx}].esAnli=+this.value">
+            <button class="info-ico" style="width:15px;height:15px;font-size:9px;" onclick="showEsAnliInfo(this, \`${esAnliTipTr}\`, \`${esAnliTipEn}\`)">ℹ</button>
+          </div>
+          <div class="ch-bot-lbl">
+            <span>${shrinkLbl}:</span>
+            <input type="number" value="${ch.shrink !== undefined ? ch.shrink : 25}" min="0" max="60" oninput="channels[${idx}].shrink=+this.value">
+            <span class="ch-unit">%</span>
+          </div>
+          <div class="ch-bot-lbl">
+            <span>${slLbl}:</span>
+            <input type="number" value="${ch.sl !== undefined ? ch.sl : 80}" min="50" max="99" oninput="channels[${idx}].sl=+this.value">
+            <span class="ch-unit">%</span>
+          </div>
+          <div class="ch-bot-lbl">
+            <span>${tgtLbl}:</span>
+            <input type="number" value="${ch.tgt !== undefined ? ch.tgt : 20}" min="1" oninput="channels[${idx}].tgt=+this.value">
+            <span class="ch-unit">${secLbl}</span>
+          </div>
+          <div style="flex:1"></div>
+          <div class="ch-bot-lbl" style="gap:8px;">
+            <span style="color:var(--tm)">${activeLbl}</span>
+            <button class="ch-toggle ${ch.active?'on':''}" onclick="toggleCh(${idx})"></button>
+            ${ch.deletable ? '<button class="btn-del" onclick="delChannel(' + idx + ')">✕</button>' : ''}
+          </div>
         </div>
       </div>`;
     list.appendChild(row);
@@ -492,7 +513,7 @@ function delChannel(idx) {
 function addChannel() {
   customCount++;
   const L = LANG[curLang];
-  channels.push({id:'c'+customCount, icon:'⚙️', name:(curLang==='tr'?'Özel Kanal ':'Custom Channel ')+customCount, msgs:30, aht:180, acw:30, esAnli:2, active:true, deletable:true});
+  channels.push({id:'c'+customCount, icon:'⚙️', name:(curLang==='tr'?'Özel Kanal ':'Custom Channel ')+customCount, msgs:30, aht:180, acw:30, esAnli:2, sl:80, tgt:20, shrink:25, active:true, deletable:true});
   renderChannels();
   // Focus the new name input
   setTimeout(()=>{
@@ -507,14 +528,17 @@ function applyGlobal(field) {
   else if(field === 'acw') val = parseInt(document.getElementById('apply-acw').value);
   else if(field === 'esAnli') val = parseInt(document.getElementById('apply-esanli').value);
   else if(field === 'shrink') val = parseInt(document.getElementById('o-shrink').value);
-  else if(field === 'sl') { val = parseInt(document.getElementById('o-sl').value); }
-  else if(field === 'tgt') { val = parseInt(document.getElementById('o-tgt').value); }
+  else if(field === 'sl') val = parseInt(document.getElementById('o-sl').value);
+  else if(field === 'tgt') val = parseInt(document.getElementById('o-tgt').value);
   if(val === undefined || val < 0) return;
-  if(field !== 'sl') channels.forEach(ch => { ch[field] = val; });
+  channels.forEach(ch => { ch[field] = val; });
   renderChannels();
-  // Flash feedback
-  event.target.textContent = '✓';
-  setTimeout(()=>{ event.target.textContent = '↓ Tüm kanallara'; }, 1000);
+  const btn = event.target;
+  const orig = btn.textContent;
+  btn.textContent = '✓';
+  btn.style.background = 'var(--gr)';
+  btn.style.color = 'white';
+  setTimeout(()=>{ btn.textContent = orig; btn.style.background=''; btn.style.color=''; }, 1200);
 }
 
 function showEsAnliInfo(btn, tipTr, tipEn) {
@@ -638,7 +662,11 @@ function handleOmniCalc(){
   if(!aktif.length){alert('En az 1 aktif kanal olmalı.');return;}
 
   const results = aktif.map(ch=>{
-    const r=calcChannel(ch.msgs,ch.aht,ch.acw,ch.esAnli,shrink,slGoal,tGoal,per);
+    // Use per-channel values, fall back to global
+    const chShrink = (ch.shrink !== undefined ? ch.shrink : shrink) / 100;
+    const chSl = (ch.sl !== undefined ? ch.sl : parseInt(document.getElementById('o-sl').value)) / 100;
+    const chTgt = ch.tgt !== undefined ? ch.tgt : tGoal;
+    const r=calcChannel(ch.msgs,ch.aht,ch.acw,ch.esAnli,chShrink,chSl,chTgt,per);
     return {...ch,...r};
   });
 
