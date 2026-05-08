@@ -108,29 +108,29 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .sl-table tr:last-child td{border:none;}
 
 /* OMNICHANNEL */
-.ch-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--bd);border-radius:8px;margin-bottom:8px;background:white;transition:border-color .2s;}
+.ch-row{border:1.5px solid var(--bd);border-radius:9px;margin-bottom:10px;background:white;transition:border-color .2s;overflow:hidden;}
 .ch-row:hover{border-color:var(--pr4);}
-.ch-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0;}
-.ch-name-col{width:90px;flex-shrink:0;}
+.ch-top{display:grid;grid-template-columns:28px 1fr 64px 64px 64px;gap:8px;align-items:center;padding:10px 12px;}
+.ch-bot{display:flex;align-items:center;gap:16px;padding:8px 12px;border-top:1px solid var(--bd);background:var(--bg);}
+.ch-bot-lbl{font-size:11px;color:var(--tm);display:flex;align-items:center;gap:6px;}
+.ch-bot-lbl strong{font-weight:700;color:var(--tx);}
+.ch-bot-lbl input{width:50px;padding:4px 6px;border:1.5px solid var(--bd);border-radius:6px;font-family:inherit;font-size:12px;text-align:center;outline:none;background:white;}
+.ch-bot-lbl input:focus{border-color:var(--pr2);}
+.ch-icon{font-size:16px;text-align:center;line-height:1;}
 .ch-name{font-size:12px;font-weight:700;color:var(--tx);}
-.ch-input-wrap{display:flex;flex-direction:column;align-items:center;flex:1;min-width:55px;}
-.ch-input{padding:6px 4px;border:1.5px solid var(--bd);border-radius:6px;font-family:inherit;font-size:12px;color:var(--tx);background:var(--bg);outline:none;width:100%;text-align:center;}
-.ch-input:focus{border-color:var(--pr2);background:white;}
-.ch-lbl{font-size:9px;color:var(--tl);text-align:center;margin-top:2px;}
-.ch-toggle-col{display:flex;align-items:center;gap:4px;flex-shrink:0;}
-.ch-header{display:flex;gap:8px;padding:4px 12px;margin-bottom:4px;}
-.ch-header .ch-h-icon{width:28px;flex-shrink:0;}
-.ch-header .ch-h-name{width:90px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;}
-.ch-header .ch-h-field{flex:1;min-width:55px;font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;text-align:center;}
-.ch-header .ch-h-toggle{width:80px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;text-align:center;}
-.ch-toggle{width:32px;height:20px;background:var(--bd);border-radius:10px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;}
+.ch-input-name{border:none;border-bottom:1.5px solid var(--bd);border-radius:0;font-family:inherit;font-size:12px;font-weight:700;color:var(--tx);background:transparent;outline:none;width:100%;padding:2px 0;}
+.ch-input-name:focus{border-bottom-color:var(--pr2);}
+.ch-input{padding:5px 6px;border:1.5px solid var(--bd);border-radius:6px;font-family:inherit;font-size:12px;color:var(--tx);background:#fff;outline:none;width:100%;text-align:center;}
+.ch-input:focus{border-color:var(--pr2);}
+.ch-lbl{font-size:10px;color:var(--tl);text-align:center;margin-top:2px;}
+.ch-col{display:flex;flex-direction:column;}
+.ch-header{display:grid;grid-template-columns:28px 1fr 64px 64px 64px;gap:8px;padding:4px 12px 6px;margin-bottom:2px;}
+.ch-header span{font-size:10px;font-weight:700;color:var(--tl);text-transform:uppercase;letter-spacing:.4px;text-align:center;}
+.ch-header span:nth-child(2){text-align:left;}
+.ch-toggle{width:36px;height:22px;background:var(--bd);border-radius:11px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;}
 .ch-toggle.on{background:var(--pr2);}
-.ch-toggle::after{content:'';position:absolute;width:14px;height:14px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
-.ch-toggle.on::after{left:15px;}
-
-.apply-bar{background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;font-size:12px;color:#0C447C;}
-.apply-bar input{padding:6px 10px;border:1.5px solid var(--pr4);border-radius:6px;font-family:inherit;font-size:12px;width:70px;text-align:center;outline:none;}
-.apply-bar button{background:var(--pr2);color:white;border:none;padding:6px 14px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;}
+.ch-toggle::after{content:'';position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.ch-toggle.on::after{left:17px;}
 
 /* OMNI RESULT */
 .omni-result-table{width:100%;border-collapse:collapse;font-size:13px;}
@@ -172,8 +172,9 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .seo-kw{margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--tl);text-align:center;}
 
 /* APPLY MINI BUTTON */
-.apply-mini{background:var(--pr3);color:var(--pr2);border:1px solid var(--pr4);padding:3px 10px;border-radius:12px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.apply-mini{background:var(--pr3);color:var(--pr2);border:1px solid var(--pr4);padding:3px 10px;border-radius:12px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;}
 .apply-mini:hover{background:var(--pr2);color:white;}
+.apply-mini:hover::after{content:attr(data-tip);position:absolute;right:0;top:26px;background:var(--pr);color:white;font-size:10px;font-weight:400;padding:5px 10px;border-radius:6px;white-space:nowrap;z-index:50;pointer-events:none;}
 .info-ico{width:22px;height:22px;border-radius:50%;background:var(--pr2);color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .info-ico:hover{background:var(--pr);}
 
@@ -292,13 +293,16 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="fgrp">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
               <label class="flabel" style="margin:0;" id="lbl-o-shrink-l">Shrinkage <span class="tip">(%)</span></label>
-              <button class="apply-mini" onclick="applyGlobal('shrink')" id="lbl-apply-shrink-btn">↓ Tüm kanallara</button>
+              <button class="apply-mini" onclick="applyGlobal('shrink')" id="lbl-apply-shrink-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="o-shrink" class="finput" value="25" min="0" max="60">
           </div>
 
           <div class="fgrp">
-            <label class="flabel" id="lbl-o-sl-l">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <label class="flabel" style="margin:0;" id="lbl-o-sl-l">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label>
+              <button class="apply-mini" onclick="applyGlobal('sl')" id="lbl-apply-sl-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
+            </div>
             <input type="number" id="o-sl" class="finput" value="80" min="50" max="99">
           </div>
 
@@ -310,7 +314,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="fgrp">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
               <label class="flabel" style="margin:0;" id="lbl-o-aht-l">Ortak AHT <span class="tip">(sn)</span></label>
-              <button class="apply-mini" onclick="applyGlobal('aht')" id="lbl-apply-aht-btn">↓ Tüm kanallara</button>
+              <button class="apply-mini" onclick="applyGlobal('aht')" id="lbl-apply-aht-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="apply-aht" class="finput" value="180" min="1">
           </div>
@@ -318,7 +322,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="fgrp">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
               <label class="flabel" style="margin:0;" id="lbl-o-acw-l">Ortak ACW <span class="tip">(sn)</span></label>
-              <button class="apply-mini" onclick="applyGlobal('acw')" id="lbl-apply-acw-btn">↓ Tüm kanallara</button>
+              <button class="apply-mini" onclick="applyGlobal('acw')" id="lbl-apply-acw-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="apply-acw" class="finput" value="30" min="0">
           </div>
@@ -326,7 +330,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="fgrp">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
               <label class="flabel" style="margin:0;" id="lbl-o-es-l">Ortak Eş Anlı Kapasite</label>
-              <button class="apply-mini" onclick="applyGlobal('esAnli')" id="lbl-apply-es-btn">↓ Tüm kanallara</button>
+              <button class="apply-mini" onclick="applyGlobal('esAnli')" id="lbl-apply-es-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="apply-esanli" class="finput" value="1" min="1" max="20">
           </div>
@@ -427,20 +431,32 @@ function renderChannels() {
   channels.forEach((ch, idx) => {
     const row = document.createElement('div');
     row.className = 'ch-row';
-    row.style.opacity = ch.active ? '1' : '0.5';
-    const nameCol = ch.deletable
-      ? `<div class="ch-name-col"><input class="ch-input" style="text-align:left;font-weight:700;width:100%;" value="${ch.name}" onchange="channels[${idx}].name=this.value" placeholder="Kanal adı"></div>`
-      : `<div class="ch-name-col"><div class="ch-name">${ch.name}</div></div>`;
+    row.style.opacity = ch.active ? '1' : '0.55';
+    const esAnliLbl = curLang==='tr' ? 'Eş Anlı Kapasite' : 'Concurrent';
+    const activeLbl = curLang==='tr' ? 'Aktif' : 'Active';
     row.innerHTML = `
-      <div class="ch-icon">${ch.icon}</div>
-      ${nameCol}
-      <div class="ch-input-wrap"><input type="number" class="ch-input" value="${ch.msgs}" min="0" onchange="channels[${idx}].msgs=+this.value"><div class="ch-lbl">${L.ch.msgs}</div></div>
-      <div class="ch-input-wrap"><input type="number" class="ch-input" value="${ch.aht}" min="1" onchange="channels[${idx}].aht=+this.value"><div class="ch-lbl">${L.ch.aht}</div></div>
-      <div class="ch-input-wrap"><input type="number" class="ch-input" value="${ch.acw}" min="0" onchange="channels[${idx}].acw=+this.value"><div class="ch-lbl">${L.ch.acw}</div></div>
-      <div class="ch-input-wrap"><input type="number" class="ch-input" value="${ch.esAnli}" min="1" max="20" onchange="channels[${idx}].esAnli=+this.value"><div class="ch-lbl">${L.ch.esAnli}</div></div>
-      <div class="ch-toggle-col">
-        <button class="ch-toggle ${ch.active?'on':''}" onclick="toggleCh(${idx})"></button>
-        ${ch.deletable ? `<button class="btn-del" onclick="delChannel(${idx})">✕</button>` : ''}
+      <div class="ch-top">
+        <div class="ch-icon">${ch.icon}</div>
+        <div class="ch-col">
+          ${ch.deletable
+            ? '<input class="ch-input-name" value="' + ch.name + '" placeholder="' + (curLang==='tr'?'Kanal adı...':'Channel name...') + '" oninput="channels[' + idx + '].name=this.value">'
+            : '<div class="ch-name">' + ch.name + '</div>'}
+        </div>
+        <div class="ch-col"><input type="number" class="ch-input" value="${ch.msgs}" min="0" oninput="channels[${idx}].msgs=+this.value"><div class="ch-lbl">${L.ch.msgs}</div></div>
+        <div class="ch-col"><input type="number" class="ch-input" value="${ch.aht}" min="1" oninput="channels[${idx}].aht=+this.value"><div class="ch-lbl">${L.ch.aht}</div></div>
+        <div class="ch-col"><input type="number" class="ch-input" value="${ch.acw}" min="0" oninput="channels[${idx}].acw=+this.value"><div class="ch-lbl">${L.ch.acw}</div></div>
+      </div>
+      <div class="ch-bot">
+        <div class="ch-bot-lbl">
+          <span>${esAnliLbl}:</span>
+          <input type="number" value="${ch.esAnli}" min="1" max="20" oninput="channels[${idx}].esAnli=+this.value">
+        </div>
+        <div style="flex:1"></div>
+        <div class="ch-bot-lbl" style="gap:8px;">
+          <span style="color:var(--tm)">${activeLbl}</span>
+          <button class="ch-toggle ${ch.active?'on':''}" onclick="toggleCh(${idx})"></button>
+          ${ch.deletable ? '<button class="btn-del" onclick="delChannel(' + idx + ')">✕</button>' : ''}
+        </div>
       </div>`;
     list.appendChild(row);
   });
@@ -474,9 +490,13 @@ function applyGlobal(field) {
   else if(field === 'acw') val = parseInt(document.getElementById('apply-acw').value);
   else if(field === 'esAnli') val = parseInt(document.getElementById('apply-esanli').value);
   else if(field === 'shrink') val = parseInt(document.getElementById('o-shrink').value);
-  if(!val || val < 0) return;
-  channels.forEach(ch => { ch[field] = val; });
+  else if(field === 'sl') { val = parseInt(document.getElementById('o-sl').value); }
+  if(val === undefined || val < 0) return;
+  if(field !== 'sl') channels.forEach(ch => { ch[field] = val; });
   renderChannels();
+  // Flash feedback
+  event.target.textContent = '✓';
+  setTimeout(()=>{ event.target.textContent = '↓ Tüm kanallara'; }, 1000);
 }
 
 function toggleAsyncInfo() {
