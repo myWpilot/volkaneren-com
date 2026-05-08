@@ -64,6 +64,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
 /* LAYOUT */
 .layout{display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start;}
+.layout-3col{display:grid;grid-template-columns:300px 1fr 380px;gap:18px;align-items:start;}
 
 /* CARD */
 .card{background:var(--su);border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);padding:20px;margin-bottom:16px;}
@@ -126,6 +127,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .ch-col{display:flex;flex-direction:column;}
 .ch-header{display:grid;grid-template-columns:28px 1fr 64px 64px 64px;gap:8px;padding:4px 12px 6px;margin-bottom:2px;}
 .ch-header span{font-size:10px;font-weight:700;color:var(--tl);text-transform:uppercase;letter-spacing:.4px;text-align:center;}
+.ch-header span:first-child{text-align:center;}
 .ch-header span:nth-child(2){text-align:left;}
 .ch-toggle{width:36px;height:22px;background:var(--bd);border-radius:11px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;}
 .ch-toggle.on{background:var(--pr2);}
@@ -191,6 +193,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
 @media(max-width:800px){
   .layout{grid-template-columns:1fr;}
+  .layout-3col{grid-template-columns:1fr;}
   .main{padding:12px;}
   .hdr{padding:0 14px;}
   .hdr-right{display:none;}
@@ -280,7 +283,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
   <!-- ===== OMNİCHANNEL MOD ===== -->
   <div id="panel-omni" style="display:none;">
-    <div class="layout">
+    <div class="layout-3col">
       <div>
         <div class="card">
           <div class="ctitle" id="lbl-global-title">Global Ayarlar</div>
@@ -347,6 +350,8 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           </div>
         </div>
 
+      </div>
+      <div>
         <div class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
             <div class="ctitle" style="margin:0;" id="lbl-channels-title">Kanallar</div>
@@ -360,11 +365,9 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="ch-header" id="ch-header-row">
             <span></span>
             <span id="ch-h-kanal">Kanal</span>
-            <span id="ch-h-msgs">Mesaj</span>
-            <span id="ch-h-aht">AHT</span>
-            <span id="ch-h-acw">ACW</span>
-            <span id="ch-h-es">Eş Anlı</span>
-            <span id="ch-h-aktif">Aktif</span>
+            <span id="ch-h-msgs">Mesaj/dk</span>
+            <span id="ch-h-aht">AHT (sn)</span>
+            <span id="ch-h-acw">ACW (sn)</span>
           </div>
           <div id="ch-list"></div>
           <button class="btn-add" id="lbl-add-btn" onclick="addChannel()" style="margin-top:10px;">+ Kanal Ekle</button>
@@ -463,6 +466,7 @@ function renderChannels() {
         <div class="ch-bot-lbl">
           <span>${esAnliLbl}:</span>
           <input type="number" value="${ch.esAnli}" min="1" max="20" oninput="channels[${idx}].esAnli=+this.value">
+          <button class="info-ico" style="width:16px;height:16px;font-size:10px;" onclick="showEsAnliInfo(this, \`${esAnliTipTr}\`, \`${esAnliTipEn}\`)">ℹ</button>
         </div>
         <div style="flex:1"></div>
         <div class="ch-bot-lbl" style="gap:8px;">
@@ -511,6 +515,18 @@ function applyGlobal(field) {
   // Flash feedback
   event.target.textContent = '✓';
   setTimeout(()=>{ event.target.textContent = '↓ Tüm kanallara'; }, 1000);
+}
+
+function showEsAnliInfo(btn, tipTr, tipEn) {
+  const tip = curLang === 'tr' ? tipTr : tipEn;
+  const chRow = btn.closest('.ch-row');
+  const existing = chRow.querySelector('.inline-popup');
+  if (existing) { existing.remove(); return; }
+  const pop = document.createElement('div');
+  pop.className = 'inline-popup';
+  pop.style.cssText = 'margin:0 12px 10px;';
+  pop.innerHTML = '<button class="close-pop" onclick="this.parentElement.remove()">✕</button>' + tip;
+  chRow.appendChild(pop);
 }
 
 function toggleAsyncInfo() {
