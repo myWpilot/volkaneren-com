@@ -177,6 +177,11 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .apply-mini:hover::after{content:attr(data-tip);position:absolute;right:0;top:26px;background:var(--pr);color:white;font-size:10px;font-weight:400;padding:5px 10px;border-radius:6px;white-space:nowrap;z-index:50;pointer-events:none;}
 .info-ico{width:22px;height:22px;border-radius:50%;background:var(--pr2);color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .info-ico:hover{background:var(--pr);}
+.inline-info{width:16px;height:16px;border-radius:50%;background:var(--pr3);color:var(--pr2);border:1px solid var(--pr4);font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;}
+.inline-info:hover{background:var(--pr2);color:white;}
+.inline-popup{background:white;border:1.5px solid var(--bd);border-radius:9px;padding:12px 14px;font-size:12px;color:var(--tm);line-height:1.7;box-shadow:0 4px 20px rgba(0,0,0,.12);margin-top:8px;margin-bottom:4px;position:relative;}
+.inline-popup strong{color:var(--pr);}
+.inline-popup .close-pop{position:absolute;top:6px;right:8px;background:none;border:none;font-size:14px;cursor:pointer;color:var(--tl);}
 
 /* LANGUAGE TOGGLE */
 .lang-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;}
@@ -307,7 +312,10 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           </div>
 
           <div class="fgrp">
-            <label class="flabel" id="lbl-o-tgt-l">Hedef Cevaplama Süresi <span class="tip">(sn)</span></label>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <label class="flabel" style="margin:0;" id="lbl-o-tgt-l">Hedef Cevaplama Süresi <span class="tip">(sn)</span></label>
+              <button class="apply-mini" onclick="applyGlobal('tgt')" id="lbl-apply-tgt-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
+            </div>
             <input type="number" id="o-tgt" class="finput" value="20" min="1">
           </div>
 
@@ -329,7 +337,10 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
           <div class="fgrp">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:6px;">
               <label class="flabel" style="margin:0;" id="lbl-o-es-l">Ortak Eş Anlı Kapasite</label>
+              <span class="inline-info" data-tip-tr="Bir agent'ın aynı anda kaç farklı kanalda müşteri ile konuşabileceğidir. Telefon için her zaman 1 olmalıdır. WhatsApp/Chat için 3-4, E-mail için 5-8 tipik değerlerdir. Bu değer arttıkça ihtiyaç duyulan agent sayısı azalır." data-tip-en="How many simultaneous conversations one agent can handle. For Phone: always 1. For WhatsApp/Chat: 3-4 typical. For Email: 5-8 typical. Higher value = fewer agents needed in calculation." onclick="showInlineInfo(this)">ℹ</span>
+            </div>
               <button class="apply-mini" onclick="applyGlobal('esAnli')" id="lbl-apply-es-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="apply-esanli" class="finput" value="1" min="1" max="20">
@@ -433,6 +444,8 @@ function renderChannels() {
     row.className = 'ch-row';
     row.style.opacity = ch.active ? '1' : '0.55';
     const esAnliLbl = curLang==='tr' ? 'Eş Anlı Kapasite' : 'Concurrent';
+    const esAnliTipTr = "Bir agent'ın aynı anda kaç konuşma yürütebileceğini gösterir. Örnek: Telefon=1 (aynı anda tek çağrı), WhatsApp=3 (aynı anda 3 sohbet), E-mail=5 (aynı anda 5 e-posta). Bu sayı arttıkça daha az agent gerekir.";
+    const esAnliTipEn = "How many simultaneous conversations one agent can handle. Example: Phone=1 (one call at a time), WhatsApp=3 (3 chats at once), Email=5 (5 emails at once). Higher number = fewer agents needed.";
     const activeLbl = curLang==='tr' ? 'Aktif' : 'Active';
     row.innerHTML = `
       <div class="ch-top">
@@ -491,6 +504,7 @@ function applyGlobal(field) {
   else if(field === 'esAnli') val = parseInt(document.getElementById('apply-esanli').value);
   else if(field === 'shrink') val = parseInt(document.getElementById('o-shrink').value);
   else if(field === 'sl') { val = parseInt(document.getElementById('o-sl').value); }
+  else if(field === 'tgt') { val = parseInt(document.getElementById('o-tgt').value); }
   if(val === undefined || val < 0) return;
   if(field !== 'sl') channels.forEach(ch => { ch[field] = val; });
   renderChannels();
@@ -502,6 +516,27 @@ function applyGlobal(field) {
 function toggleAsyncInfo() {
   const box = document.getElementById('async-info-box');
   if(box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+function showInlineInfo(btn) {
+  const tip = curLang === 'tr' ? btn.dataset.tipTr : btn.dataset.tipEn;
+  // Check if popup already exists near this btn
+  const parent = btn.closest('.ch-row') || btn.closest('.fgrp') || btn.parentElement.parentElement;
+  const existing = parent.querySelector('.inline-popup');
+  if(existing) { existing.remove(); return; }
+  const pop = document.createElement('div');
+  pop.className = 'inline-popup';
+  pop.style.cssText = 'margin:8px 12px;';
+  pop.innerHTML = '<button class="close-pop" onclick="this.parentElement.remove()">✕</button>' + tip;
+  // For channel rows, insert after ch-bot; for fgrp, append to fgrp
+  const chBot = btn.closest('.ch-bot');
+  if(chBot) {
+    chBot.parentElement.appendChild(pop);
+  } else {
+    const fgrp = btn.closest('.fgrp');
+    if(fgrp) fgrp.appendChild(pop);
+    else btn.parentElement.appendChild(pop);
+  }
 }
 
 function applyAllAHT() {
@@ -906,9 +941,11 @@ function applyLang() {
     'lbl-ph-basit': L.phBasit,
     'lbl-ph-omni': L.phOmni,
     'lbl-apply-aht-btn': L.applyBtn,
+    'lbl-apply-tgt-btn': L.applyBtn,
     'lbl-apply-acw-btn': L.applyBtn,
     'lbl-apply-es-btn': L.applyBtn,
     'lbl-apply-shrink-btn': L.applyBtn,
+    'lbl-apply-sl-btn': L.applyBtn,
     'lbl-global-sub': curLang==='tr' ? 'Her parametrenin yanındaki ok butonu ile o değeri tüm kanallara uygulayabilirsiniz.' : 'Use the arrow button next to each parameter to apply it to all channels.',
     'lbl-o-aht-l': curLang==='tr' ? 'Ortak AHT (sn)' : 'Common AHT (sec)',
     'lbl-o-acw-l': curLang==='tr' ? 'Ortak ACW (sn)' : 'Common ACW (sec)',
