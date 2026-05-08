@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PRIMARY SEO -->
+<title>Erlang Hesaplama & Çağrı Merkezi Kapasite Planlama Aracı | volkaneren.com</title>
+<meta name="description" content="Ücretsiz Erlang C hesaplama aracı. Çağrı merkezi kapasite planlaması, agent sayısı hesaplama, AHT, shrinkage ve hizmet seviyesi analizi. Free call center Erlang calculator for workforce planning.">
+<meta name="keywords" content="erlang hesaplama, erlang calculator, çağrı merkezi kapasite, call center capacity planning, agent sayısı hesaplama, workforce planning, AHT hesaplama, shrinkage, hizmet seviyesi, service level, call center staffing">
+<meta name="author" content="Volkan EREN">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.volkaneren.com/">
+
+<!-- OPEN GRAPH (Sosyal Medya) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.volkaneren.com/">
+<meta property="og:title" content="Erlang Hesaplama & Çağrı Merkezi Kapasite Planlama Aracı">
+<meta property="og:description" content="Ücretsiz Erlang C hesaplama aracı. Agent sayısı, hizmet seviyesi ve kapasite analizi. Free call center workforce planning calculator.">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:locale:alternate" content="en_US">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Erlang Hesaplama & Çağrı Merkezi Kapasite Planlama">
+<meta name="twitter:description" content="Ücretsiz çağrı merkezi kapasite hesaplama aracı. Free call center Erlang calculator.">
+<meta name="twitter:site" content="@volkaneren">
+
+<!-- SCHEMA.ORG STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Erlang Hesaplama & Çağrı Merkezi Kapasite Planlama Aracı",
+  "alternateName": "Call Center Erlang Calculator",
+  "url": "https://www.volkaneren.com/",
+  "description": "Ücretsiz Erlang C hesaplama aracı. Çağrı merkezi kapasite planlaması için agent sayısı, hizmet seviyesi ve shrinkage hesaplama.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TRY"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Volkan EREN",
+    "email": "volkaneren34@hotmail.com"
+  },
+  "inLanguage": ["tr", "en"],
+  "keywords": "erlang hesaplama, call center capacity planning, çağrı merkezi kapasite, agent sayısı, workforce planning"
+}
+</script>
+
+<!-- HREFLANG -->
+<link rel="alternate" hreflang="tr" href="https://www.volkaneren.com/">
+<link rel="alternate" hreflang="en" href="https://www.volkaneren.com/">
+<link rel="alternate" hreflang="x-default" href="https://www.volkaneren.com/">
+
+<script defer src="/_vercel/insights/script.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pr:#1A2E4A;--pr2:#185FA5;--pr3:#EBF3FC;--pr4:#B5D4F4;
+  --gr:#1A7F4B;--grs:#E6F4ED;
+  --re:#B91C1C;--res:#FEE2E2;
+  --wa:#B45309;--was:#FEF3C7;
+  --bg:#F4F6FB;--su:#FFF;--bd:#E2E6F0;
+  --tx:#1A2E4A;--tm:#5A6478;--tl:#9AA3B8;
+  --rad:10px;--sh:0 2px 10px rgba(26,46,74,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;min-height:100vh;}
+
+/* HEADER */
+.hdr{background:var(--pr);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-icon{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.hdr-title{color:white;font-size:15px;font-weight:700;letter-spacing:.3px;}
+.hdr-sub{color:rgba(255,255,255,.55);font-size:11px;margin-top:1px;}
+.hdr-right{font-size:11px;color:rgba(255,255,255,.5);}
+.hdr-right a{color:rgba(255,255,255,.7);text-decoration:none;}
+.hdr-right a:hover{color:white;}
+
+/* MAIN */
+.main{padding:28px 32px;max-width:1100px;margin:0 auto;}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:400px 1fr;gap:22px;align-items:start;}
+
+/* CARD */
+.card{background:var(--su);border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);padding:22px;margin-bottom:16px;}
+.ctitle{font-size:11px;font-weight:700;color:var(--pr);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;display:flex;align-items:center;gap:7px;}
+.ctitle::before{content:'';width:3px;height:12px;background:var(--pr2);border-radius:2px;}
+
+/* FORM */
+.flabel{display:block;font-size:11px;font-weight:700;color:var(--tm);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
+.flabel .tip{font-size:10px;font-weight:400;color:var(--tl);text-transform:none;letter-spacing:0;margin-left:4px;}
+.finput{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;transition:border-color .2s;}
+.finput:focus{border-color:var(--pr2);background:#fff;}
+.fsel{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;cursor:pointer;}
+.fsel:focus{border-color:var(--pr2);}
+.fgrp{margin-bottom:14px;}
+
+/* BUTTON */
+.btn{background:var(--pr);color:#fff;border:none;padding:11px 24px;border-radius:7px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;width:100%;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover{background:var(--pr2);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn-outline{background:#fff;color:var(--pr);border:1.5px solid var(--pr);padding:10px 24px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;transition:all .2s;margin-top:8px;}
+.btn-outline:hover{background:var(--pr3);}
+
+/* RESULT HERO */
+.result-hero{background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);border-radius:var(--rad);padding:26px;text-align:center;color:#fff;margin-bottom:16px;}
+.result-hero .lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.65;margin-bottom:8px;}
+.result-hero .num{font-size:68px;font-weight:700;line-height:1;}
+.result-hero .sub{font-size:12px;opacity:.65;margin-top:6px;}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.metric{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:13px;text-align:center;}
+.metric .v{font-size:20px;font-weight:700;color:var(--pr);}
+.metric .l{font-size:10px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+
+.info-box{background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:13px 15px;font-size:12px;color:#0C447C;line-height:1.6;margin-bottom:14px;}
+
+/* SL TABLE */
+.sl-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sl-table th{padding:7px 10px;text-align:left;background:var(--bg);font-weight:700;color:var(--tm);border-bottom:1px solid var(--bd);font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
+.sl-table td{padding:7px 10px;border-bottom:1px solid var(--bd);color:var(--tx);}
+.sl-table tr.opt td{background:var(--pr3);font-weight:700;}
+.sl-table tr:last-child td{border:none;}
+
+/* STEPS */
+.step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.step-n{width:20px;height:20px;background:var(--pr2);color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-txt{font-size:12px;color:var(--tm);line-height:1.7;}
+
+/* EMAIL GATE */
+.email-gate{background:linear-gradient(135deg,var(--pr) 0%,#0F4C8A 100%);border-radius:var(--rad);padding:28px;text-align:center;color:#fff;}
+.email-gate .ico{font-size:36px;margin-bottom:12px;}
+.email-gate h3{font-size:17px;font-weight:700;margin-bottom:6px;}
+.email-gate p{font-size:13px;opacity:.8;line-height:1.6;margin-bottom:20px;}
+.email-input-wrap{display:flex;gap:8px;max-width:400px;margin:0 auto;}
+.email-input{flex:1;padding:11px 14px;border:none;border-radius:7px;font-family:inherit;font-size:14px;outline:none;color:var(--tx);}
+.email-btn{background:var(--gr);color:#fff;border:none;padding:11px 20px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
+.email-btn:hover{opacity:.88;}
+.email-btn:disabled{opacity:.5;cursor:not-allowed;}
+.email-note{font-size:11px;opacity:.55;margin-top:10px;}
+.email-err{font-size:12px;color:#FCA5A5;margin-top:8px;}
+
+/* PLACEHOLDER */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;color:var(--tl);gap:8px;font-size:13px;}
+.ph .ico{font-size:36px;}
+
+/* FOOTER */
+.footer{margin-top:24px;padding:14px 0;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-l{font-size:11px;color:var(--tl);font-style:italic;}
+.footer-l strong{color:var(--tm);}
+.footer-r{font-size:11px;color:var(--tl);}
+.footer-r a{color:var(--pr2);text-decoration:none;font-weight:600;}
+
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr;}
+  .main{padding:14px;}
+  .hdr{padding:0 14px;}
+  .metrics{grid-template-columns:1fr 1fr;}
+  .email-input-wrap{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-icon">📊</div>
+    <div>
+      <div class="hdr-title">Kapasite Hesaplama Aracı</div>
+      <div class="hdr-sub">Çağrı Merkezi Planlama</div>
+    </div>
+  </div>
+  <div class="hdr-right" style="color:rgba(255,255,255,.7);font-size:11px;text-align:right;">
+    <span>© 2026 Tüm hakları <strong style="color:white;">Volkan EREN</strong>'e aittir. Bu araç fikri mülkiyettir.</span>
+    <span style="margin:0 6px;opacity:.4;">|</span>
+    <a href="mailto:volkaneren34@hotmail.com" style="color:rgba(255,255,255,.85);text-decoration:none;">volkaneren34@hotmail.com</a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="layout">
+
+    <!-- SOL: FORM -->
+    <div>
+      <div class="card">
+        <div class="ctitle">Parametre Girişi</div>
+
+        <div class="fgrp">
+          <label class="flabel">Ölçüm Periyodu</label>
+          <select class="fsel" id="e-per">
+            <option value="15">15 dakika</option>
+            <option value="30" selected>30 dakika</option>
+            <option value="60">60 dakika</option>
+          </select>
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Bu Periyottaki Çağrı Sayısı</label>
+          <input type="number" id="e-calls" class="finput" value="120" min="1">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Average Handle Time — AHT <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-aht" class="finput" value="180" min="1">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hold Time <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-hold" class="finput" value="30" min="0">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">ACW — After Call Work <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-acw" class="finput" value="30" min="0">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Shrinkage / Kayıp Oranı <span class="tip">(%)</span></label>
+          <input type="number" id="e-shrink" class="finput" value="25" min="0" max="60">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label>
+          <input type="number" id="e-sl" class="finput" value="80" min="50" max="99">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hedef Cevaplama Süresi <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-tgt" class="finput" value="20" min="1">
+        </div>
+
+        <button class="btn" onclick="handleCalc()">🔢 Hesapla</button>
+      </div>
+
+      <!-- Nasıl Çalışır -->
+      <div class="card">
+        <div class="ctitle">Nasıl Çalışır?</div>
+        <div style="font-size:12px;color:var(--tm);line-height:1.7;">
+          <div class="step"><div class="step-n">1</div><div class="step-txt"><strong>Çağrı yükü hesaplanır.</strong> Saatlik çağrı × AHT ÷ 3600 = Trafik yoğunluğu (A). Kaç agent'ın sürekli meşgul kalacağını gösterir.</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-txt"><strong>Matematiksel formül uygulanır.</strong> Rastgele gelen çağrıları ve bekleme sırasını modelleyen formüldür. Hedef hizmet seviyesine göre minimum agent sayısı bulunur.</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-txt"><strong>Shrinkage eklenir.</strong> Mola, toplantı, eğitim gibi kayıplar hesaba katılır. Saf ihtiyaç ÷ (1 − Shrinkage%) = Nihai agent sayısı.</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-txt"><strong>Hizmet seviyesi doğrulanır.</strong> Farklı agent sayıları için elde edilecek oranlar tabloda gösterilir.</div></div>
+          <div style="margin-top:10px;padding:10px 12px;background:var(--pr3);border-radius:7px;font-size:11px;color:#0C447C;">
+            <strong>⚠️ Not:</strong> Formül kimsenin hattı kapatmadığını varsayar. Gerçek ortamlarda terk oranı da dikkate alınmalıdır.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAĞ: SONUÇ -->
+    <div id="result-col">
+      <div class="card">
+        <div class="ctitle">Hesaplama Sonucu</div>
+        <div class="ph"><div class="ico">🔢</div><div>Parametreleri girin ve hesapla butonuna basın</div></div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- SEO CONTENT BLOCK -->
+  <div style="margin-top:32px;padding:28px 32px;background:white;border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+
+      <div>
+        <h2 style="font-size:16px;font-weight:700;color:var(--pr);margin-bottom:10px;">Erlang Hesaplama Nedir?</h2>
+        <p style="font-size:13px;color:var(--tm);line-height:1.8;margin-bottom:10px;">
+          Erlang C formülü, çağrı merkezlerinde gelen çağrı yoğunluğuna göre kaç temsilcinin (agent) çalışması gerektiğini matematiksel olarak hesaplayan bir yöntemdir. 
+          1917 yılında Danimarkalı matematikçi Agner Krarup Erlang tarafından geliştirilmiştir.
+        </p>
+        <p style="font-size:13px;color:var(--tm);line-height:1.8;">
+          Bu araç; AHT (Average Handle Time), shrinkage oranı, hedef hizmet seviyesi ve çağrı hacmi gibi parametreleri kullanarak optimum agent sayısını hesaplar.
+        </p>
+        <h3 style="font-size:14px;font-weight:700;color:var(--pr);margin:14px 0 8px;">Anahtar Kavramlar</h3>
+        <ul style="font-size:13px;color:var(--tm);line-height:2;padding-left:18px;">
+          <li><strong>AHT (Average Handle Time):</strong> Ortalama çağrı süresi</li>
+          <li><strong>Shrinkage:</strong> Mola, toplantı, eğitim gibi kayıp oranı</li>
+          <li><strong>Hizmet Seviyesi:</strong> Belirli sürede cevaplanan çağrı yüzdesi</li>
+          <li><strong>Erlang A (Trafik Yükü):</strong> Sistemdeki çağrı yoğunluğu</li>
+          <li><strong>ACW (After Call Work):</strong> Çağrı sonrası işlem süresi</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 style="font-size:16px;font-weight:700;color:var(--pr);margin-bottom:10px;">Call Center Erlang Calculator</h2>
+        <p style="font-size:13px;color:var(--tm);line-height:1.8;margin-bottom:10px;">
+          This free Erlang C calculator helps call center managers and workforce planners determine the optimal number of agents needed to meet service level targets.
+        </p>
+        <p style="font-size:13px;color:var(--tm);line-height:1.8;">
+          Enter your call volume, AHT, shrinkage rate, and target service level to instantly calculate required staffing. The tool also provides a service level table showing performance at different agent counts.
+        </p>
+        <h3 style="font-size:14px;font-weight:700;color:var(--pr);margin:14px 0 8px;">How to Use</h3>
+        <ol style="font-size:13px;color:var(--tm);line-height:2;padding-left:18px;">
+          <li>Select your measurement interval (15, 30 or 60 minutes)</li>
+          <li>Enter call volume for that interval</li>
+          <li>Input AHT, Hold Time and ACW in seconds</li>
+          <li>Set shrinkage percentage (typically 20-30%)</li>
+          <li>Define your service level target (e.g. 80% in 20 seconds)</li>
+          <li>Click Calculate to see results</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);font-size:11px;color:var(--tl);text-align:center;">
+      Çağrı merkezi kapasite hesaplama | Erlang C calculator | Call center staffing | Workforce planning tool | Agent sayısı hesaplama | volkaneren.com
+    </div>
+  </div>
+
+</main>
+
+<script>
+const SUPABASE_URL = 'https://scuehzsfrzcxwuqtsnix.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_rgwceGzTGxaTRbGAsTMi7Q_ur-ppJ6J';
+
+let emailVerildi = false;
+let sonucVerisi = null;
+
+// ===== HESAPLAMA =====
+function erlangC(A, N) {
+  if (N <= A) return 1;
+  let inv = 1;
+  for (let i = 1; i <= N; i++) inv = 1 + inv * i / A;
+  inv = 1 / inv;
+  return inv / (inv + (1 - A / N) * (1 - inv) / (A / N));
+}
+
+function SL(A, N, t, T) {
+  if (N <= A) return 0;
+  return 1 - erlangC(A, N) * Math.exp(-(N - A) * t / T);
+}
+
+function hesapla() {
+  const per = parseInt(document.getElementById('e-per').value);
+  const calls = parseInt(document.getElementById('e-calls').value);
+  const aht = parseInt(document.getElementById('e-aht').value);
+  const acw = parseInt(document.getElementById('e-acw').value);
+  const shrink = parseInt(document.getElementById('e-shrink').value) / 100;
+  const slGoal = parseInt(document.getElementById('e-sl').value) / 100;
+  const tGoal = parseInt(document.getElementById('e-tgt').value);
+
+  if (!calls || !aht || calls < 1 || aht < 1) return null;
+
+  const T = aht + acw;
+  const cph = calls * (60 / per);
+  const A = (cph * T) / 3600;
+
+  let N = Math.max(Math.ceil(A) + 1, 1);
+  let sl = 0;
+  while (N < 500) { sl = SL(A, N, tGoal, T); if (sl >= slGoal) break; N++; }
+
+  const raw = N;
+  const final = Math.ceil(raw / (1 - shrink));
+  const util = Math.round((A / raw) * 100);
+  const ec = erlangC(A, raw);
+  const avgW = raw > A ? Math.round((ec * T) / (raw - A)) : 999;
+
+  // Tablo verileri
+  const tablo = [];
+  for (let n = Math.max(Math.ceil(A) + 1, raw - 2); n <= raw + 5; n++) {
+    const slN = SL(A, n, tGoal, T);
+    const ecN = erlangC(A, n);
+    const wN = n > A ? Math.round((ecN * T) / (n - A)) : '—';
+    const uN = Math.round((A / n) * 100);
+    tablo.push({ n, slN, wN, uN, opt: n === raw });
+  }
+
+  return { final, raw, shrink, T, cph, A, sl, util, avgW, tablo, slGoal };
+}
+
+function handleCalc() {
+  const sonuc = hesapla();
+  if (!sonuc) {
+    alert('Lütfen geçerli değerler girin.');
+    return;
+  }
+  sonucVerisi = sonuc;
+
+  if (emailVerildi) {
+    // Aynı oturumda tekrar hesapladı — direkt göster
+    gosterSonuc(sonucVerisi);
+  } else {
+    // Email kapısını göster
+    gosterEmailGate();
+  }
+}
+
+function gosterEmailGate() {
+  document.getElementById('result-col').innerHTML = `
+    <div class="email-gate">
+      <div class="ico">📬</div>
+      <h3>Sonucunuz hazır!</h3>
+      <p>E-posta adresinizi girerek sonucu hemen görün.<br>Bu oturumda bir kez yeterli — bir daha sormayacağız.</p>
+      <div class="email-input-wrap">
+        <input type="email" class="email-input" id="gate-email" placeholder="ornek@sirket.com" onkeydown="if(event.key==='Enter')submitEmail()">
+        <button class="email-btn" id="gate-btn" onclick="submitEmail()">Sonucu Gör →</button>
+      </div>
+      <div class="email-note">Spam göndermiyoruz. Verileriniz güvende.</div>
+      <div class="email-err" id="gate-err"></div>
+    </div>
+  `;
+}
+
+async function submitEmail() {
+  const emailEl = document.getElementById('gate-email');
+  const btn = document.getElementById('gate-btn');
+  const errEl = document.getElementById('gate-err');
+  const email = emailEl.value.trim();
+
+  if (!email || !email.includes('@')) {
+    errEl.textContent = '⚠️ Lütfen geçerli bir e-posta adresi girin.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Kaydediliyor...';
+  errEl.textContent = '';
+
+  // Parametreleri JSON olarak hazırla
+  const params = {
+    periyot: document.getElementById('e-per').value,
+    cagri: document.getElementById('e-calls').value,
+    aht: document.getElementById('e-aht').value,
+    acw: document.getElementById('e-acw').value,
+    shrinkage: document.getElementById('e-shrink').value,
+    hizmet_seviyesi: document.getElementById('e-sl').value,
+    hedef_sure: document.getElementById('e-tgt').value
+  };
+
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/kapasite_leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email, parametreler: JSON.stringify(params) })
+    });
+
+    if (resp.ok || resp.status === 201) {
+      emailVerildi = true;
+      gosterSonuc(sonucVerisi);
+    } else {
+      const err = await resp.text();
+      errEl.textContent = '⚠️ Bir hata oluştu, lütfen tekrar deneyin.';
+      btn.disabled = false;
+      btn.textContent = 'Sonucu Gör →';
+    }
+  } catch (e) {
+    // Network hatası olsa bile sonucu göster (kullanıcı deneyimi)
+    emailVerildi = true;
+    gosterSonuc(sonucVerisi);
+  }
+}
+
+function gosterSonuc(s) {
+  const yorumRenk = s.util >= 90 ? 'var(--re)' : s.util >= 80 ? 'var(--wa)' : 'var(--gr)';
+  const yorum = s.util >= 90
+    ? `<strong>⚠️ Kritik Yük:</strong> %${s.util} kullanım çok yüksek. Küçük bir çağrı artışı bekleme sürelerini dramatik biçimde uzatır. Ek agent planlaması önerilir.`
+    : s.util >= 80
+    ? `<strong>✅ Verimli:</strong> %${s.util} kullanım sağlıklı bir denge. Hizmet seviyesi hedefi tutturulmuş durumda.`
+    : `<strong>📊 Kapasite var:</strong> %${s.util} kullanım — agent'larda boşluk mevcut. Çağrı tahminleri gözden geçirilebilir.`;
+
+  let tabloHtml = `<table class="sl-table"><thead><tr>
+    <th>Agent</th><th>Hizmet Sev.</th><th>Ort. Bekleme</th><th>Kullanım</th>
+  </tr></thead><tbody>`;
+  s.tablo.forEach(r => {
+    tabloHtml += `<tr ${r.opt ? 'class="opt"' : ''}>
+      <td>${r.n}${r.opt ? ' ⭐' : ''}</td>
+      <td style="color:${r.slN >= s.slGoal ? 'var(--gr)' : 'var(--re)'}">%${Math.round(r.slN * 100)}</td>
+      <td>${r.wN}${typeof r.wN === 'number' ? 'sn' : ''}</td>
+      <td>%${r.uN}</td>
+    </tr>`;
+  });
+  tabloHtml += '</tbody></table>';
+
+  document.getElementById('result-col').innerHTML = `
+    <div class="result-hero">
+      <div class="lbl">Toplam Agent İhtiyacı (Shrinkage Dahil)</div>
+      <div class="num">${s.final}</div>
+      <div class="sub">%${Math.round(s.shrink * 100)} shrinkage dahil — Saf ihtiyaç: ${s.raw} agent</div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="v">${s.A.toFixed(2)}</div><div class="l">Trafik Yükü</div></div>
+      <div class="metric"><div class="v">%${Math.round(s.sl * 100)}</div><div class="l">Hizmet Sev.</div></div>
+      <div class="metric"><div class="v">%${s.util}</div><div class="l">Kullanım</div></div>
+      <div class="metric"><div class="v">${s.avgW}sn</div><div class="l">Ort. Bekleme</div></div>
+      <div class="metric"><div class="v">${s.T}sn</div><div class="l">Toplam AHT</div></div>
+      <div class="metric"><div class="v">${Math.round(s.cph)}</div><div class="l">Çağrı/Saat</div></div>
+    </div>
+
+    <div class="info-box" style="border-color:${yorumRenk};background:${s.util>=90?'var(--res)':s.util>=80?'var(--was)':'var(--pr3)'};">${yorum}</div>
+
+    <div class="card" style="padding:16px;">
+      <div class="ctitle">Hizmet Seviyesi Tablosu</div>
+      <p style="font-size:11px;color:var(--tm);margin-bottom:10px;">Farklı agent sayılarında elde edilecek hizmet seviyeleri — ⭐ optimal nokta</p>
+      ${tabloHtml}
+    </div>
+
+    <div style="text-align:center;margin-top:8px;">
+      <button class="btn-outline" onclick="yeniHesapla()">🔄 Yeni Hesaplama</button>
+    </div>
+  `;
+}
+
+function yeniHesapla() {
+  document.getElementById('result-col').innerHTML = `
+    <div class="card">
+      <div class="ctitle">Hesaplama Sonucu</div>
+      <div class="ph"><div class="ico">🔢</div><div>Parametreleri girin ve hesapla butonuna basın</div></div>
+    </div>`;
+}
+</script>
+</body>
+</html>
