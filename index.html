@@ -340,12 +340,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
             <input type="number" id="apply-acw" class="finput" value="30" min="0">
           </div>
 
-          <div class="fgrp">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-              <div style="display:flex;align-items:center;gap:6px;">
-              <label class="flabel" style="margin:0;" id="lbl-o-es-l">Ortak Eş Anlı Kapasite</label>
-
-            </div>
+          </div>
               <button class="apply-mini" onclick="applyGlobal('esAnli')" id="lbl-apply-es-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
             </div>
             <input type="number" id="apply-esanli" class="finput" value="1" min="1" max="20">
@@ -999,7 +994,6 @@ function applyLang() {
     'lbl-global-sub': curLang==='tr' ? 'Her parametrenin yanındaki ok butonu ile o değeri tüm kanallara uygulayabilirsiniz.' : 'Use the arrow button next to each parameter to apply it to all channels.',
     'lbl-o-aht-l': curLang==='tr' ? 'Ortak AHT (sn)' : 'Common AHT (sec)',
     'lbl-o-acw-l': curLang==='tr' ? 'Ortak ACW (sn)' : 'Common ACW (sec)',
-    'lbl-o-es-l': curLang==='tr' ? 'Ortak Eş Anlı Kapasite' : 'Common Concurrent Capacity',
     'lbl-info-title': curLang==='tr' ? '📊 Hesaplama Hakkında' : '📊 About the Calculation',
     'lbl-info-body': curLang==='tr' ? 'Bu araç tüm kanallar için aynı matematiksel formülü kullanır. Telefon ve Live Chat için tam uygundur. E-mail ve Sosyal Medya gibi asenkron kanallar için hizmet seviyesi hedefini saat cinsinden düşünmek gerekir. Pratik kullanım için sonuçlar yol gösterici niteliktedir.' : 'This tool uses the same mathematical formula for all channels. It is fully appropriate for Phone and Live Chat. For async channels like Email and Social Media, the service level target should be in hours, not seconds. Results are indicative for practical use.',
   };
