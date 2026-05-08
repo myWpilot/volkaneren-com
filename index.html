@@ -48,8 +48,8 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .hdr-icon{width:42px;height:42px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;}
 .hdr-title{color:white;font-size:15px;font-weight:700;}
 .hdr-sub{color:rgba(255,255,255,.55);font-size:11px;margin-top:1px;}
-.hdr-right{font-size:11px;color:rgba(255,255,255,.7);text-align:right;}
-.hdr-right a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;}
+.hdr-right{font-size:11px;color:white;text-align:right;}
+.hdr-right a{color:#7DD3FC;text-decoration:none;font-weight:600;}
 
 /* MODE SWITCHER */
 .mode-bar{background:white;border-bottom:1px solid var(--bd);padding:14px 32px;display:flex;align-items:center;gap:16px;}
@@ -206,8 +206,8 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
     </div>
   </div>
   <div class="hdr-right">
-    <span style="opacity:.6;margin-right:8px;">© 2026 Tüm hakları <strong style="color:white;">Volkan EREN</strong>'e aittir</span>
-    <a href="mailto:volkaneren34@hotmail.com">volkaneren34@hotmail.com</a>
+    <span style="color:rgba(255,255,255,.85);margin-right:8px;">© 2026 Tüm hakları <strong style="color:white;font-weight:700;">Volkan EREN</strong>'e aittir</span>
+    <a href="mailto:volkaneren34@hotmail.com" style="color:#7DD3FC;text-decoration:none;font-weight:700;">volkaneren34@hotmail.com</a>
   </div>
 </header>
 
@@ -418,9 +418,8 @@ function setMode(mode, btn) {
   btn.classList.add('act');
   document.getElementById('panel-basit').style.display = mode==='basit'?'block':'none';
   document.getElementById('panel-omni').style.display  = mode==='omni'?'block':'none';
-  document.getElementById('mode-desc').textContent = mode==='basit'
-    ? 'Tek kanal (telefon) için hızlı hesaplama'
-    : 'Telefon, WhatsApp, e-mail ve tüm kanallar için toplam agent ihtiyacı';
+  const L = LANG[curLang];
+  document.getElementById('mode-desc').textContent = mode==='basit' ? L.modeDescBasit : L.modeDescOmni;
 }
 
 // ===== ERLANG =====
@@ -583,9 +582,6 @@ function resetOmni(){
   document.getElementById('omni-result-col').innerHTML='<div class="card"><div class="ctitle">Omnichannel Sonuç</div><div class="ph"><div class="ico">🌐</div><div>Kanalları doldurun ve hesapla butonuna basın</div></div></div>';
 }
 
-// Init
-renderChannels();
-
 // ===== DİL SİSTEMİ =====
 const LANG = {
   tr: {
@@ -693,7 +689,7 @@ const LANG = {
     omniTotalLbl: 'TOTAL AGENT REQUIREMENT',
     omniNote: '💡 <strong>Note:</strong> This calculation assumes dedicated agents per channel. If agents handle multiple channels, actual requirement may be lower.',
     emailTitle: 'Your result is ready!',
-    emailDesc: 'Enter your email to see the result instantly.<br>Only once per session — we won't ask again.',
+    emailDesc: 'Enter your email to see the result instantly.<br>Only once per session — we won’t ask again.',
     emailPh: 'you@company.com',
     emailBtn: 'Show →',
     emailNote: 'No spam. Ever.',
@@ -802,6 +798,10 @@ function applyLang() {
   const addBtn = document.querySelector('.btn-add');
   if(addBtn) addBtn.textContent = L.btnAdd;
 }
+
+// ===== INIT =====
+renderChannels();
+applyLang();
 </script>
 </body>
 </html>
