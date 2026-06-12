@@ -664,6 +664,7 @@ function handleCalc(){
   const s=hesapla();
   if(!s){alert('Lütfen geçerli değerler girin.');return;}
   pendingSonuc=s; pendingMode='basit';
+  if(typeof gtag==='function') gtag('event','hesapla_basit',{agent_sonuc:s.final});
   if(emailVerildi){gosterSonuc(s);}else{gosterEmailGate('result-col');}
 }
 
@@ -686,6 +687,7 @@ function handleOmniCalc(){
   });
 
   pendingSonuc=results; pendingMode='omni';
+  if(typeof gtag==='function') gtag('event','hesapla_omni',{kanal_sayisi:results.length, toplam_agent:results.reduce((s,r)=>s+r.final,0)});
   if(emailVerildi){gosterOmniSonuc(results);}else{gosterEmailGate('omni-result-col');}
 }
 
@@ -718,6 +720,7 @@ async function submitEmail(){
     await fetch(`${SUPABASE_URL}/rest/v1/kapasite_leads`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},body:JSON.stringify({email,parametreler:JSON.stringify(params)})});
   }catch(e){}
   emailVerildi=true;
+  if(typeof gtag==='function') gtag('event','email_submit',{mode:pendingMode});
   if(pendingMode==='basit') gosterSonuc(pendingSonuc);
   else gosterOmniSonuc(pendingSonuc);
 }
