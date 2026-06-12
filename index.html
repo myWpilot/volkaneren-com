@@ -27,6 +27,15 @@
 </script>
 
 <script defer src="/_vercel/insights/script.js"></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L5S87X40EJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L5S87X40EJ');
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -257,7 +266,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <div class="ctitle">Parametre Girişi</div>
           <div class="fgrp">
             <label class="flabel">Ölçüm Periyodu</label>
-            <select class="fsel" id="e-per"><option value="15">15 dakika</option><option value="30">30 dakika</option><option value="60"selected>60 dakika</option></select>
+            <select class="fsel" id="e-per"><option value="15">15 dakika</option><option value="30" selected>30 dakika</option><option value="60">60 dakika</option></select>
           </div>
           <div class="fgrp"><label class="flabel">Bu Periyottaki Çağrı Sayısı</label><input type="number" id="e-calls" class="finput" value="120" min="1"></div>
           <div class="fgrp"><label class="flabel">AHT — Average Handle Time <span class="tip">(saniye)</span></label><input type="number" id="e-aht" class="finput" value="180" min="1"></div>
@@ -295,8 +304,8 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
             <label class="flabel" id="lbl-o-per-l">Ölçüm Periyodu</label>
             <select class="fsel" id="o-per">
               <option value="15" id="o-per-15">15 dakika</option>
-              <option value="30" id="o-per-30">30 dakika</option>
-              <option value="60" selected id="o-per-60">60 dakika</option>
+              <option value="30" selected id="o-per-30">30 dakika</option>
+              <option value="60" id="o-per-60">60 dakika</option>
             </select>
           </div>
 
@@ -340,7 +349,18 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
             <input type="number" id="apply-acw" class="finput" value="30" min="0">
           </div>
 
-       </div>
+          <div class="fgrp">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:6px;">
+              <label class="flabel" style="margin:0;" id="lbl-o-es-l">Ortak Eş Anlı Kapasite</label>
+
+            </div>
+              <button class="apply-mini" onclick="applyGlobal('esAnli')" id="lbl-apply-es-btn" data-tip="Bu değeri aşağıdaki tüm kanallara uygular. Her kanalı tek tek özelleştirebilirsiniz.">↓ Tüm kanallara</button>
+            </div>
+            <input type="number" id="apply-esanli" class="finput" value="1" min="1" max="20">
+          </div>
+        </div>
+
         <div class="card" style="margin-top:16px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
             <div class="ctitle" style="margin:0;" id="lbl-channels-title">Kanallar</div>
@@ -419,7 +439,7 @@ let pendingMode = null;
 const DEFAULT_CHANNELS = [
   {id:'tel', icon:'📞', name:'Telefon',      msgs:120, aht:180, acw:30, esAnli:1, sl:80, tgt:20,    shrink:25, active:true,  deletable:false},
   {id:'wa',  icon:'💬', name:'WhatsApp',     msgs:80,  aht:240, acw:30, esAnli:3, sl:80, tgt:30,    shrink:25, active:false, deletable:false},
-  {id:'em',  icon:'📧', name:'E-mail',       msgs:40,  aht:480, acw:60, esAnli:5, sl:90, tgt:1800, shrink:25, active:false, deletable:false},
+  {id:'em',  icon:'📧', name:'E-mail',       msgs:40,  aht:480, acw:60, esAnli:5, sl:90, tgt:14400, shrink:25, active:false, deletable:false},
   {id:'ch',  icon:'💻', name:'Live Chat',    msgs:60,  aht:300, acw:30, esAnli:4, sl:80, tgt:30,    shrink:25, active:false, deletable:false},
   {id:'sm',  icon:'📱', name:'Sosyal Medya', msgs:30,  aht:180, acw:30, esAnli:4, sl:80, tgt:3600,  shrink:25, active:false, deletable:false},
   {id:'sms', icon:'✉️', name:'SMS',          msgs:20,  aht:60,  acw:15, esAnli:6, sl:80, tgt:60,    shrink:25, active:false, deletable:false},
@@ -988,6 +1008,7 @@ function applyLang() {
     'lbl-global-sub': curLang==='tr' ? 'Her parametrenin yanındaki ok butonu ile o değeri tüm kanallara uygulayabilirsiniz.' : 'Use the arrow button next to each parameter to apply it to all channels.',
     'lbl-o-aht-l': curLang==='tr' ? 'Ortak AHT (sn)' : 'Common AHT (sec)',
     'lbl-o-acw-l': curLang==='tr' ? 'Ortak ACW (sn)' : 'Common ACW (sec)',
+    'lbl-o-es-l': curLang==='tr' ? 'Ortak Eş Anlı Kapasite' : 'Common Concurrent Capacity',
     'lbl-info-title': curLang==='tr' ? '📊 Hesaplama Hakkında' : '📊 About the Calculation',
     'lbl-info-body': curLang==='tr' ? 'Bu araç tüm kanallar için aynı matematiksel formülü kullanır. Telefon ve Live Chat için tam uygundur. E-mail ve Sosyal Medya gibi asenkron kanallar için hizmet seviyesi hedefini saat cinsinden düşünmek gerekir. Pratik kullanım için sonuçlar yol gösterici niteliktedir.' : 'This tool uses the same mathematical formula for all channels. It is fully appropriate for Phone and Live Chat. For async channels like Email and Social Media, the service level target should be in hours, not seconds. Results are indicative for practical use.',
   };
