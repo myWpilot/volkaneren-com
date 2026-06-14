@@ -66,7 +66,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .mode-tabs{display:flex;gap:4px;background:var(--bd);padding:3px;border-radius:8px;}
 .mtab{padding:7px 20px;border:none;background:none;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--tm);transition:all .2s;}
 .mtab.act{background:var(--pr);color:white;box-shadow:0 2px 6px rgba(26,46,74,.2);}
-.mode-desc{font-size:12px;color:var(--tl);margin-left:8px;}
+.mode-desc{font-size:12px;color:var(--tm);margin-left:8px;font-weight:500;}
 
 /* MAIN */
 .main{padding:24px 32px;max-width:1100px;margin:0 auto;}
@@ -82,7 +82,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
 /* FORM */
 .flabel{display:block;font-size:11px;font-weight:700;color:var(--tm);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
-.flabel .tip{font-size:10px;font-weight:400;color:var(--tl);text-transform:none;letter-spacing:0;margin-left:4px;}
+.flabel .tip{font-size:10px;font-weight:500;color:var(--tm);text-transform:none;letter-spacing:0;margin-left:4px;}
 .finput{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;transition:border-color .2s;}
 .finput:focus{border-color:var(--pr2);background:#fff;}
 .fsel{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;cursor:pointer;}
@@ -172,7 +172,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .email-err{font-size:12px;color:#FCA5A5;margin-top:6px;}
 
 /* PH */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;color:var(--tl);gap:8px;font-size:13px;}
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;color:var(--tm);gap:8px;font-size:13px;}
 .ph .ico{font-size:34px;}
 
 /* SEO CONTENT */
@@ -182,7 +182,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .seo-block h3{font-size:14px;font-weight:700;color:var(--pr);margin:14px 0 8px;}
 .seo-block p{font-size:13px;color:var(--tm);line-height:1.8;margin-bottom:10px;}
 .seo-block ul,.seo-block ol{font-size:13px;color:var(--tm);line-height:2;padding-left:18px;}
-.seo-kw{margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--tl);text-align:center;}
+.seo-kw{margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);font-size:11px;color:var(--tm);text-align:center;}
 
 /* APPLY MINI BUTTON */
 .apply-mini{background:var(--pr3);color:var(--pr2);border:1px solid var(--pr4);padding:3px 10px;border-radius:12px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;}
@@ -265,16 +265,16 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
         <div class="card">
           <div class="ctitle">Parametre Girişi</div>
           <div class="fgrp">
-            <label class="flabel">Ölçüm Periyodu</label>
+            <label class="flabel" for="e-per">Ölçüm Periyodu</label>
             <select class="fsel" id="e-per"><option value="15">15 dakika</option><option value="30" selected>30 dakika</option><option value="60">60 dakika</option></select>
           </div>
-          <div class="fgrp"><label class="flabel">Bu Periyottaki Çağrı Sayısı</label><input type="number" id="e-calls" class="finput" value="120" min="1"></div>
-          <div class="fgrp"><label class="flabel">AHT — Average Handle Time <span class="tip">(saniye)</span></label><input type="number" id="e-aht" class="finput" value="180" min="1"></div>
-          <div class="fgrp"><label class="flabel">Hold Time <span class="tip">(saniye)</span></label><input type="number" id="e-hold" class="finput" value="30" min="0"></div>
-          <div class="fgrp"><label class="flabel">ACW — After Call Work <span class="tip">(saniye)</span></label><input type="number" id="e-acw" class="finput" value="30" min="0"></div>
-          <div class="fgrp"><label class="flabel">Shrinkage <span class="tip">(%)</span></label><input type="number" id="e-shrink" class="finput" value="25" min="0" max="60"></div>
-          <div class="fgrp"><label class="flabel">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label><input type="number" id="e-sl" class="finput" value="80" min="50" max="99"></div>
-          <div class="fgrp"><label class="flabel">Hedef Cevaplama Süresi <span class="tip">(saniye)</span></label><input type="number" id="e-tgt" class="finput" value="20" min="1"></div>
+          <div class="fgrp"><label class="flabel" for="e-calls">Bu Periyottaki Çağrı Sayısı</label><input type="number" id="e-calls" class="finput" value="120" min="1"></div>
+          <div class="fgrp"><label class="flabel" for="e-aht">AHT — Average Handle Time <span class="tip">(saniye)</span></label><input type="number" id="e-aht" class="finput" value="180" min="1"></div>
+          <div class="fgrp"><label class="flabel" for="e-hold">Hold Time <span class="tip">(saniye)</span></label><input type="number" id="e-hold" class="finput" value="30" min="0"></div>
+          <div class="fgrp"><label class="flabel" for="e-acw">ACW — After Call Work <span class="tip">(saniye)</span></label><input type="number" id="e-acw" class="finput" value="30" min="0"></div>
+          <div class="fgrp"><label class="flabel" for="e-shrink">Shrinkage <span class="tip">(%)</span></label><input type="number" id="e-shrink" class="finput" value="25" min="0" max="60"></div>
+          <div class="fgrp"><label class="flabel" for="e-sl">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label><input type="number" id="e-sl" class="finput" value="80" min="50" max="99"></div>
+          <div class="fgrp"><label class="flabel" for="e-tgt">Hedef Cevaplama Süresi <span class="tip">(saniye)</span></label><input type="number" id="e-tgt" class="finput" value="20" min="1"></div>
           <button class="btn" onclick="handleCalc()">🔢 Hesapla</button>
         </div>
         <div class="card">
@@ -301,7 +301,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
           <p style="font-size:11px;color:var(--tl);margin-bottom:14px;" id="lbl-global-sub">Her parametrenin yanındaki ok butonu ile o değeri tüm kanallara uygulayabilirsiniz.</p>
 
           <div class="fgrp">
-            <label class="flabel" id="lbl-o-per-l">Ölçüm Periyodu</label>
+            <label class="flabel" for="o-per" id="lbl-o-per-l">Ölçüm Periyodu</label>
             <select class="fsel" id="o-per">
               <option value="15" id="o-per-15">15 dakika</option>
               <option value="30" selected id="o-per-30">30 dakika</option>
